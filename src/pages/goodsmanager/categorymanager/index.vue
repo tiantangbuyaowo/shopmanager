@@ -1,6 +1,6 @@
 <template>
   <d2-container :filename="filename" >
-
+    <!--<template slot="header">分类管理</template>-->
 
     <el-row :gutter="24">
 

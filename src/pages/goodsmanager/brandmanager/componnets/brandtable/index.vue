@@ -27,7 +27,7 @@
             </el-table-column>
             <el-table-column label="品牌图片" width="400" align="center">
                 <template slot-scope="scope">
-
+                    <img :src="scope.row.image" width="100%">
                 </template>
             </el-table-column>
         </el-table>

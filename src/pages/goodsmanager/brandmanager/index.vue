@@ -3,16 +3,17 @@
 
     <d2-container :filename="filename">
         <template slot="header">
-            <searchForm></searchForm>
+            <searchForm @submit="handleSubmit"></searchForm>
         </template>
         <brandtTable
                 :table-data="table"
                 :loading="loading"></brandtTable>
         <paginationFooter
                 slot="footer"
-                :current="page.pageCurrent"
-                :size="page.pageSize"
-                :total="page.pageTotal"></paginationFooter>
+                :pageCurrent="page.pageCurrent"
+                :pageSize="page.pageSize"
+                :pageTotal="page.pageTotal"
+                @change="handlePaginationChange"></paginationFooter>
 
 
     </d2-container>
@@ -38,34 +39,53 @@
                     pageCurrent: 1,
                     pageSize: 10,
                     pageTotal: 0
+                },
+                form:{
+
                 }
             }
         },
         mounted: function () {
 
-            this.loadBrandTableData().then(res => {
-                this.loading = false;
-                //alert(res.pages)
-                this.page.pageTotal = res.total;
-                this.page.pageCurrent = res.pageNum;
-                this.page.pageSize = res.pageSize;
-                this.table = res.list
-            })
-                .catch(err => {
-                    this.loading = false;
-                })
-            ;
+            this.loadBrandTableData();
 
 
         },
         methods: {
-            loadBrandTableData: function () {
+            handlePaginationChange(val) {
+                this.page = val
+                this.loadBrandTableData();
+
+            },
+            getTableData: function () {
                 return request({
                     url: '/goods/brand/list',
-                    method: 'post'
+                    method: 'post',
+                    data: this.page
                 })
-            }
+            },
+            loadBrandTableData: function () {
+                this.getTableData().then(res => {
+                    this.loading = false;
+                    //alert(res.pages)
+                    this.page.pageTotal = res.total;
+                    this.page.pageCurrent = res.pageNum;
+                    this.page.pageSize = res.pageSize;
+                    this.table = res.list
+                })
+                    .catch(err => {
+                        this.loading = false;
+                    })
 
+
+            },
+            handleSubmit (form) {
+                this.loading = true
+                this.$notify({
+                    title: '开始请求模拟表格数据'
+                })
+
+            }
         }
     }
 </script>

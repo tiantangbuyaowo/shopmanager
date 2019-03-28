@@ -50,13 +50,14 @@ export default {
       this.$refs.form.validate((valid) => {
         if (valid) {
           this.$emit('submit', this.form)
-        } else {
+        }
+        /*else {
           this.$notify.error({
             title: '错误',
             message: '表单校验失败'
           })
           return false
-        }
+        }*/
       })
     },
     handleFormReset () {

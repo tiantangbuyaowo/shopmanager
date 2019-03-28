@@ -38,10 +38,8 @@
                 page: {
                     pageCurrent: 1,
                     pageSize: 10,
-                    pageTotal: 0
-                },
-                form:{
-
+                    pageTotal: 0,
+                    name: ''
                 }
             }
         },
@@ -53,7 +51,9 @@
         },
         methods: {
             handlePaginationChange(val) {
-                this.page = val
+                this.page.pageTotal = val.pageTotal
+                this.page.pageSize = val.pageSize
+                this.page.pageTotal = val.pageTotal
                 this.loadBrandTableData();
 
             },
@@ -62,6 +62,7 @@
                     url: '/goods/brand/list',
                     method: 'post',
                     data: this.page
+
                 })
             },
             loadBrandTableData: function () {
@@ -79,12 +80,11 @@
 
 
             },
-            handleSubmit (form) {
-                this.loading = true
-                this.$notify({
-                    title: '开始请求模拟表格数据'
-                })
-
+            handleSubmit(form) {
+                //this.loading = true
+                //alert(form.name);
+                this.page.name = form.name
+                this.loadBrandTableData();
             }
         }
     }

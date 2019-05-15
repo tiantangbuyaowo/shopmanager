@@ -101,7 +101,7 @@
             },
             addTableData: function () {
                 return request({
-                    url: '/goods/brand/brand',
+                    url: '/goods/brand',
                     method: 'post',
                     data: this.addform
 
